@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
+    http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd    ">
+
+
+	<!-- needs bean: dataSource, jpaProperties -->
+ 	<bean id="abstractWebAppEmf" abstract="true"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+<!--  		<property name="dataSource" ref="dataSource" /> -->
+		<property name="persistenceUnitName" value="@eligibility.mvn.persistence.unit.name@" />
+		<property name="packagesToScan">
+			<util:list>
+				<value>com.novation.eligibility.domain.model</value>
+			</util:list>
+		</property>
+		<property name="mappingResources">
+			<util:list>
+				<value>META-INF/orm.xml</value>
+			</util:list>
+		</property>
+		<property name="jpaPropertyMap" ref="jpaProperties" />
+	</bean> 
+
+	<util:properties id="jpaProperties" location="classpath:jpa.properties" />
+
+ 	<beans profile="datanucleus">
+		<bean id="emf" parent="abstractWebAppEmf">
+			<property name="persistenceProviderClass"
+				value="@eligibility.persistence-api.impl.datanucleus.class.name@" />
+		</bean>
+	</beans>
+
+	<beans profile="hibernate,default">
+		<bean id="emf" parent="abstractWebAppEmf">
+			<property name="persistenceProviderClass"
+				value="@eligibility.persistence-api.impl.hibernate.class.name@" />
+		</bean>
+	</beans>
+
+
+
+</beans>

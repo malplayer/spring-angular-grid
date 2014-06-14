@@ -1,0 +1,4 @@
+# This script is a convenient means of setting maven's max permgen size to avoid out of memory errors when building.
+# It only needs to be run once per shell, unless you define your own MAVEN_OPTS environment variable elsewhere.
+
+export MAVEN_OPTS="-Xmx512m -XX:MaxPermSize=256m"

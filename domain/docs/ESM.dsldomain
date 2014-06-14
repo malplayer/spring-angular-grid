@@ -1,0 +1,214 @@
+domain-model ESM {
+	//node-mongo-options {
+	//	model-path "../models/"
+	//}
+//	roo-gen-options {
+//		project-options {
+//			project-name Eligibility
+//			root-package com.novation
+//		}
+//		persistence-options {
+//			database DERBY_EMBEDDED
+//			provider HIBERNATE
+//		}
+//	}
+	enum ProgramType {
+		Pricing = "Pricing" // has tiers, defines prices and products
+		Commitment = "Commitment" // saying you have to commit (typically sign some document) to something. Doesn't define prices, may be required for a subset of tiers 
+		Standarication = "Standardization" // TBD
+		Incentive = "Incentive" // TBD
+		Other = "Other" // TBD
+	}
+	enum SelectionType {
+		Requested = "Requested"
+		Countered = "Countered"
+		Accepted = "Accepted"
+	}
+	enum ContractExecutionEventType {
+		MemberInitialRequest = "Member Initial Request"
+		SupplierApproval = "Supplier Approval"
+		SupplierApprovalRequest = "Supplier Approval Request"
+		SupplierTierChange = "Supplier Tier Change"
+		MemberAcceptanceNewTier = "Member Acceptance New Tier"
+		DistributorConfirmationRequest = "Distributor Confirmation Request"
+		SupplierDenyRequest = "Supplier Deny Request"
+		SupplierBulkRequest = "Supplier Bulk Request"
+		HardCopyInitialRequest = "Hard Copy Initial Request"
+	}
+	type Address {
+		String displayName?
+		String street!
+		String city!
+		String zip!
+		String stateCode!
+	}
+	abstract entity Party {
+		String displayName?
+		String primaryEmail?
+		String secondaryEmails*
+		String primaryPhoneNumber?
+		String secondaryPhoneNumbers*
+		Address primeAddress?
+		Address alternativeAddresses*		
+	}
+	entity ClassOfTrade {
+		String name!
+		String description?
+	}
+	entity Organization extends Party {
+		String duns?
+		String name!
+		String webSite!
+	}
+	entity Individual extends Party {
+		String firstName?
+		String middleInitial?
+		String lastName?
+	}
+	entity NovationMember {
+		String memberNumber! unique
+	}
+	entity Vendor {
+		String vendorId! unique
+	}
+	entity ContractTierExecution {
+		Date whenStarted!
+	}
+	entity ContractTierExecutionEvent {
+		Date whenOccured!
+		enum ContractExecutionEventType eventType!
+	}
+//	entity MemberInitialRequest extends ContractTierExecution {}
+//	entity SupplierApproval extends ContractTierExecution {}
+//	entity SupplierApprovalRequest extends ContractTierExecution {}
+//	entity SupplierTierChange extends ContractTierExecution {}
+//	entity MemberAcceptanceNewTier extends ContractTierExecution {}
+//	entity DistributorConfirmationRequest extends ContractTierExecution {}
+//	entity SupplierDenyRequest extends ContractTierExecution {}
+//	entity SupplierBulkRequest extends ContractTierExecution {}
+//	entity HardCopyInitialRequest extends ContractTierExecution {}
+
+	entity Contract {
+		Date effectiveDate!
+		Date expirationDate?
+	}
+	entity Tier {
+		String levelDescription!
+		/*
+		 * I commented out the fields below. This is because
+		 * the way Novation have the relationship between 
+		 * Tiers and Programs. I think the tiers should have
+		 * been children from the programs, or I would have
+		 * to introduce an association type on the relationship
+		 * between the Program and the tier that holds these
+		 * properties
+		 */
+//		Numeric volumeCommitment?
+//		Numeric spendingCommitment?
+//		Numeric quantityCommitment?
+	}
+	entity Program {
+		String name!
+		String description?
+		enum ProgramType programType!
+		String notes?
+	}
+	entity MemberAlliance {
+		String name!
+		String description?
+	}
+	entity MemberAllianceMembership {
+		Date whenEffective!
+		Date whenExpires?
+	}
+	entity ContractTierSelection {
+		enum SelectionType selectionType!
+	}
+	association Member2Org {
+		start NovationMember memberRole?
+		end Organization org!
+	}
+	association Vendor2Org {
+		start Vendor vendor?
+		end Organization org!
+	}
+	association Contract2PossibleDistr {
+		start Contract possibleDistributionContracts*
+		end Vendor possibleDistributors*
+	}
+	association Contract2Supplier {
+		start Contract contracts*
+		end Vendor supplier!
+	}
+	association Contract2Tiers {
+		start Contract contract! composition
+		end Tier tiers*
+	}
+	association Contract2Program {
+		start Contract  contract! composition
+		end Program programs*
+	}
+	association Program2Tier {
+		start Program programs*
+		end Tier tiers*
+	}
+	association M2MAMS {
+		start NovationMember novMember!
+		end MemberAllianceMembership memberships*
+	}
+	association MA2MAMS {
+		start MemberAlliance memberAlliance!
+		end MemberAllianceMembership memberships*
+	}
+	association MAMS2ClassOfTrade {
+		unidirectional
+		start MemberAllianceMembership alliances*
+		end ClassOfTrade classOfTrades* 
+	}
+	association InitiatorOfEvents {
+		start ContractTierExecutionEvent events*
+		end Party initiator!
+	}
+	association ContractTierSelection {
+		start ContractTierExecution request!
+		end ContractTierSelection selections*
+	}
+	association CTS2Tier {
+		start ContractTierSelection selections*
+		end Tier tier?
+	}
+	association CTS2Program {
+		start ContractTierSelection selections*
+		end Program program?
+	}
+	association ContractTierExecution2Member {
+		start ContractTierExecution contractExecutions*
+		end NovationMember requestingMember!
+	}
+	association ContractTierExecution2SelectedDistributor {
+		start ContractTierExecution contractExecutions*
+		end Vendor selectedDistributor?
+	}
+	association Contract2MemberAlliance {
+		start Contract exclusiveContracts*
+		end MemberAlliance exclusiveForAlliances*
+	}
+	association Tier2ClassOfTrade {
+		unidirectional
+		start Tier tiers*
+		end ClassOfTrade eligibleClassOfTrades*
+	}
+	association EventAttachment {
+		start ContractTierExecution owner! composition
+		end ContractTierExecutionEvent events*
+	}
+	/** TODO
+	 * Check this out with Peter. It seems wrong that the
+	 * system is defined as a hierarchy of memberships. 
+	 * I would think the system is based on members (as in Aptitude)
+	 */
+	association SystemOfMembers {
+		start MemberAllianceMembership parent?
+		end MemberAllianceMembership children*
+	}
+}

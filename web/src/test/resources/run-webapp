@@ -1,0 +1,140 @@
+# This file is generated so that you can run the seeded database produced
+# by the app-domain build.  Once app-web is built, just execute ./go in the app-web module root directory.
+
+# ASSUMPTIONS
+# The following commands must be on the path:  echo, sed, mkdir, unzip, mvn, & the database scripts
+
+usage()
+{
+	echo "Usage: $0 [-P profile(s)] [-u <url>] [-d <driver>] [-l <username>] [-p <password>] [-h]" >&2
+}
+
+# DEBUG
+# Set this to "echo" to debug; set to nothing to actually execute.
+ECHO=
+
+# replace dots with slashes
+COMPANY_PREFIX_AS_DIR=`echo "@project.groupId@" | sed 's/\./\//g'`
+echo "converted groupId @project.groupId@ to directory $COMPANY_PREFIX_AS_DIR"
+
+# defaults
+DB_START_SCRIPT="startNetworkServer"
+DB_STOP_SCRIPT="stopNetworkServer"
+DB_PORT=@eligibility.rdb.derby.test.database.port@
+DB_START_CMD="$DB_START_SCRIPT -h localhost -p $DB_PORT"
+DB_STOP_CMD="$DB_STOP_SCRIPT -p $DB_PORT"
+DB_HOST=@eligibility.rdb.sqlserver.test.database.hostname@
+DB_URL=jdbc:derby://$DB_HOST:$DB_PORT/@eligibility.rdb.derby.seed.artifact.artifactId@-@project.version@
+DB_DRIVER=org.apache.derby.jdbc.ClientDriver
+DB_USER=APP
+DB_PWD=nothing
+DB_ARGS_GIVEN=
+
+for x in $DB_START_SCRIPT $DB_STOP_SCRIPT
+do
+	if [ -z `which $x` ]; then
+		echo "$x must be on the path."
+		echo "If you're using derby, please install & ensure its bin directory is on your path."
+		exit 0
+	fi
+done
+
+while getopts ":P:u:d:l:p:X:s:h" OPT # "-s" is ignored here
+do
+	case "$OPT" in
+		P) PROFILES=$OPTARG ;;
+		u) DB_URL=$OPTARG ; DB_ARGS_GIVEN=1 ;;
+		d) DB_DRIVER=$OPTARG ; DB_ARGS_GIVEN=1 ;;
+		l) DB_USER=$OPTARG ; DB_ARGS_GIVEN=1 ;;
+		p) DB_PWD=$OPTARG ; DB_ARGS_GIVEN=1 ;;
+		X) DEBUG_PORT=$OPTARG ;;
+		h) usage ; exit 0 ;;
+		:) echo "Option -$OPTARG requires an argument." >&2 ; usage ; exit 1 ;;
+		\?) echo "invalid argument: -$OPTARG" >&2 ; usage ; exit 1 ;;
+	esac
+done
+
+if [ ! "$PROFILES" ]; then
+	if [ "$SPRING_PROFILES_ACTIVE" ]; then
+		echo "Warning: no profile(s) given; using current SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE"
+		PROFILES=$SPRING_PROFILES_ACTIVE
+	else
+		echo "Profile(s) are required if no environment variable SPRING_PROFILES_ACTIVE is present" >&2
+		usage
+		exit 1
+	fi
+fi
+
+DERBY_START=`which $DB_START_SCRIPT`
+
+if [ ! "$DERBY_START" ]; then 
+	echo "Derby database $DB_START_SCRIPT script not found. Please add to system path"
+	exit 1
+fi
+
+DERBY_STOP=`which $DB_STOP_SCRIPT`
+
+if [ ! "$DERBY_STOP" ]; then 
+	echo "Derby database $DB_STOP_SCRIPT script not found. Please add to system path"
+	exit 1
+fi
+
+if [ ! "$DB_ARGS_GIVEN" ]; then # use defaults -- unzip seeded database & launch server
+
+	DB_SRC_FILE=~/.m2/repository/$COMPANY_PREFIX_AS_DIR/@eligibility.rdb.derby.seed.artifact.artifactId@/@project.version@/@eligibility.rdb.derby.seed.artifact.artifactId@-@project.version@-@eligibility.rdb.derby.seed.artifact.classifier@.@eligibility.rdb.derby.seed.assembly.format@
+	DB_PARENT_DIR=@project.build.directory@/run-webapp/db
+	DB_DIR=$DB_PARENT_DIR/@eligibility.rdb.derby.seed.artifact.artifactId@-@project.version@
+	
+	$ECHO mkdir -p $DB_PARENT_DIR
+	
+	if [ -r $DB_SRC_FILE ]; then
+		$ECHO unzip -o $DB_SRC_FILE -d $DB_PARENT_DIR
+	else
+		STATUS=$?
+		echo not readable: $DB_SRC_FILE 1>&2
+		exit $STATUS
+	fi
+
+	export DERBY_OPTS="\"-Dderby.system.home=$DB_PARENT_DIR\""
+
+	if [ $ECHO ]; then
+		$ECHO $DB_START_CMD
+	else
+		# run server in background
+		$DB_START_CMD &
+	fi
+	
+	STATUS=$?
+	
+	if [ $STATUS -ne 0 ]; then
+		echo error starting $DB: status $STATUS 1>&2
+		exit $STATUS
+	fi
+
+else # db info is given
+		
+	if [ ! "$DB_URL" ]; then
+		echo "Database URL is required!" >&2
+		usage
+		exit 1
+	fi
+	
+	if [ ! "$DB_DRIVER" ]; then
+		echo "Database driver is required!" >&2
+		usage
+		exit 1
+	fi
+fi
+
+RUN_ARGS="-Dspring.profiles.active=$PROFILES -Deligibility.rdb.url=$DB_URL -Deligibility.rdb.driver=$DB_DRIVER -Deligibility.rdb.username=$DB_USER -Deligibility.rdb.password=$DB_PWD -Deligibility.rdb.driver.maxActive=4 -Deligibility.rdb.driver.maxWait=2000 "
+
+if [ $DEBUG_PORT ]; then
+	MAVEN_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=$DEBUG_PORT
+	DEBUG_MAVEN_OPTS=-X
+fi
+
+$ECHO mvn $DEBUG_MAVEN_OPTS tomcat7:run $RUN_ARGS -P $PROFILES
+
+if [ ! "$DB_ARGS_GIVEN" ]; then
+	$ECHO $DB_STOP_CMD
+fi

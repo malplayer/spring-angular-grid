@@ -1,0 +1,17 @@
+while getopts ":s:X:" OPT # "-X" ignored here & passed through
+do
+	case "$OPT" in
+		s) DB_HOST=$OPTARG ;;
+		:) echo "Option -$OPTARG requires an argument." >&2 ; usage ; exit 1 ;;
+		\?) echo "invalid argument: -$OPTARG" >&2 ; usage ; exit 1 ;;
+	esac
+done
+
+if [ ! $DB_HOST ]; then
+	echo "Database server name must be specified via '-s servername' option"
+	exit 1
+fi
+
+GO_CMD="`dirname $0`/go -P datanucleus,sqlserver,jtds -u jdbc:jtds:sqlserver://$DB_HOST:1433/eligibility-domain-seed;instance=SQLEXPRESS -d net.sourceforge.jtds.jdbc.Driver -l eligibility-domain-seed -p eligibility-domain-seed $@"
+echo $GO_CMD
+$GO_CMD

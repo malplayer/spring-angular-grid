@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.novation</groupId>
+	<artifactId>eligibility-root</artifactId>
+	<packaging>pom</packaging>
+	<version>0.1.0.BUILD-SNAPSHOT</version>
+	<name>Eligibility Multimodule Root POM</name>
+
+	<modules>
+		<module>parent-pom</module>
+		<module>test-support</module>
+		<module>support</module>
+		<module>datanucleus-rdbms-distro</module>
+		<module>hibernate-distro</module>
+		<module>hibernate-tools</module>		
+		<module>domain</module>
+		<module>dto</module>
+		<module>service</module>
+		<module>rest</module>
+		<module>web</module>
+		<module>liquibase-data</module>
+		<module>config</module>
+	</modules>
+
+</project>

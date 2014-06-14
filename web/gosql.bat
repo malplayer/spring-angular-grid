@@ -1,0 +1,1 @@
+call go.bat -P "datanucleus,sqlserver,jtds" -u "jdbc:jtds:sqlserver://localhost:1433/eligibility-domain-seed;instance=SQLEXPRESS" -d net.sourceforge.jtds.jdbc.Driver -l eligibility-domain-seed -p eligibility-domain-seed %*

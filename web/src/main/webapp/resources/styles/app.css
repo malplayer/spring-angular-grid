@@ -1,0 +1,203 @@
+/* app css stylesheet */
+
+#header_id {
+ 	background: url("../media/blue.png") top left repeat; 
+	float: none;
+	height: 90px;
+	left: 0;
+	position: static;
+	top: 0;
+	width: 100%;
+}
+
+#welcome_id {
+	padding: 25px;
+	text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#wrapper {
+    margin: 0 auto;
+    width: 98%;
+    margin-top: 5px;
+}
+
+/* Select facility group starts */
+
+#selectFacilityGroupContainer {
+  width: 100%;
+  height: 105px;
+  border:1px solid;
+  border-color:cadetblue;
+}
+
+.selectFacilityGroupHeaderTable {
+  display: table;
+  width: 100%;
+}
+
+.selectFacilityGroupHeaderRow {
+	display: table-row;
+}
+
+.selectFacilityGroupHeaderColumn {
+	display: table-cell;
+	border-style:solid;
+	border-color:#ff0000 #0000ff;
+	background: none;
+	padding: 10px;
+	text-align: left;
+    font-size: 17px;
+    font-weight: bold;	
+    color: cadetblue;	
+}
+
+.selectFacilityGroupTable {
+  display: table;
+  width: 100%;
+}
+
+.selectFacilityGroupRow {
+	display: table-row;
+	width: 100%;
+	color: white;
+	font: initial;
+}
+
+.selectFacilityGroupColumn1 {
+	display: table-cell;
+	border-style:solid;
+	border-color:#ff0000 #0000ff;
+	background: gray;
+	width: 15%;
+	text-align: center;
+}
+
+.selectFacilityGroupColumn2 {
+	display: table-cell;
+	border-style:solid;
+	border-color:#ff0000 #0000ff;
+	background: gray;
+	width: 15%;
+	padding: 5px;
+}
+
+.selectFacilityGroupColumn3 {
+	display: table-cell;
+	border-style:none;
+	border-color:#ff0000 #0000ff;
+	background: white;
+	width: 15%;
+	
+}
+
+.selectFacilityGroupColumn4 {
+	display: table-cell;
+	border-style:solid;
+	border-color:#ff0000 #0000ff;
+	background: gray;
+	width: 25%;	
+	text-align: center;
+}
+
+.selectFacilityGroupColumn5 {
+	display: table-cell;
+	border-style:solid;
+	border-color:#ff0000 #0000ff;
+	background: gray;
+	width: 20%;	
+	padding: 5px;
+}
+
+.selectFacilityGroupColumn6 {
+	display: table-cell;
+	border-style:solid;
+	border-color:#ff0000 #0000ff;
+	background: gray;
+	width: 10%;
+}
+
+/* Select facility group ends */
+
+/* Grid Control CSS starts */
+
+.facilitiesGridStyle {
+    border: 1px solid rgb(162,199,80);
+    width: 100%;
+    height: 400px;
+}
+
+.facilityGridColumnHeader {
+	background-color: rgb(162,199,80);
+	text-align: center;
+	color: white;
+}
+
+.facilityGridDataColumn {
+	font-weight:bold;
+	color: royalblue;
+}
+
+.facilitiesGridSearchBox {
+    position: absolute;
+    top: 30px; 
+    bottom: 30px;
+    left: 0; 
+    bottom:0;
+}
+
+.facilitiesGridSearchIcon {
+	position: absolute; 
+	top: 30px; 
+	height: 30px; 
+	background-color: rgb(70,140,120);
+}
+
+.facilitiesGridSearchIconParent img
+{
+	opacity:0.7;
+	filter:alpha(opacity=70); /* For IE8 and earlier */
+}
+
+.facilitiesGridSearchIconParent img:hover
+{
+	opacity:1.0;
+	filter:alpha(opacity=100); /* For IE8 and earlier */
+	-moz-box-shadow: 0 0 10px #ccc; 
+	-webkit-box-shadow: 0 0 10px #ccc; 
+	box-shadow: 0 0 10px #ccc;
+}
+
+.selectFacilityGroupExistingTypeImage {
+	max-width:60%;
+    max-height:55%;
+    padding-left: 42%
+}
+
+/* End Grid */
+
+.facilityButtonGroup {
+  display: table;
+  width: 100%;
+}
+
+.facilityButtonGroupRow {
+	display: table-row;
+	width: 100%;
+	color: white;	
+}
+
+.facilityButtonFiller {
+	display: table-cell;
+	width: 80%;	
+}
+	
+.facilityButton {
+	display: table-cell;
+	border-style:solid;
+	border-color:#ff0000 #0000ff;
+	background: none;
+	width: 10%;
+	float: center;
+}

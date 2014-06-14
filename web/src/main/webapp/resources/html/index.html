@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" ng-app="elibilityApp">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="-1"/>
+<title>Eligibility.</title>
+<link rel="stylesheet" href="resources/styles/reset.css" />
+<link rel="stylesheet" href="resources/styles/app.css" />
+<link rel="stylesheet" href="resources/styles/toastr.css" />
+<link rel="stylesheet" href="resources/styles/ng-grid.min.css" />
+<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css" />
+
+</head>
+<body>
+
+	<div id="header_id">
+		<div id="welcome_id">{{welcomeMessage}}</div>
+	</div>
+	<div id="wrapper">
+		<div ng-view></div>
+	</div>
+
+	<script src="resources/js/lib/angular/angular.min.js"></script>
+	<script src="resources/js/lib/angular/angular-resource.min.js"></script>
+	<script src="resources/js/lib/angular/angular-route.min.js"></script>
+	<script src="resources/js/lib/angular/angular-cookies.min.js"></script>	
+
+	<!--  toastr has dependency to jquery and may be bootstrap as well as tastr.css -->
+	<script src="resources/js/lib/angular/jquery-1.9.1.js"></script>
+	<script src="resources/js/lib/angular/bootstrap.js"></script>
+	<script src="resources/js/lib/angular/toastr.js"></script>
+
+	<script src="resources/js/lib/angular/ng-grid-2.0.11.min.js"></script>
+
+	<script src="resources/js/app.js"></script>
+	<script src="resources/js/services.js"></script>
+	<script src="resources/js/http-auth-interceptor.js"></script>
+		
+	<script src="resources/js/controllers/MemberController.js"></script>
+	<script src="resources/js/controllers/SupplierController.js"></script>
+	<script src="resources/js/controllers/AdminController.js"></script>
+	<script src="resources/js/controllers/InitializationController.js"></script>
+
+	<script src="resources/js/filters.js"></script>
+	<script src="resources/js/directives.js"></script>
+
+</body>
+</html>

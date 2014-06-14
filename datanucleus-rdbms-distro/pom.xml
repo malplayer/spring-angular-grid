@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+To use this convenient pom, use in your <dependencies> with the usual groupId/artifactId/version coordinates plus
+	<type>pom</type>
+-->
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.novation</groupId>
+		<artifactId>eligibility-parent-pom</artifactId>
+		<version>0.1.0.BUILD-SNAPSHOT</version>
+		<relativePath>../parent-pom/pom.xml</relativePath>
+	</parent>
+	<artifactId>eligibility-datanucleus-rdbms-distro</artifactId>
+	<packaging>pom</packaging>
+	<version>3.1.4</version><!-- corresponds to DataNucleus release version -->
+	<name>Eligibility: DataNucleus RDBMS Distribution</name>
+	<description>Convenient POM to include DataNucleus RDBMS for both JDO and JPA APIs with consideration for transitive dependency exclusions.</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-core</artifactId>
+			<version>${eligibility.datanucleus-core.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.jdo</groupId>
+					<artifactId>jdo-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.geronimo.specs</groupId>
+					<artifactId>geronimo-jta_1.1_spec</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>javax.jdo</groupId>
+			<artifactId>jdo-api</artifactId>
+			<version>${eligibility.jdo-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-api-jdo</artifactId>
+			<version>${eligibility.datanucleus-api-jdo.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.jdo</groupId>
+					<artifactId>jdo-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-api-jpa</artifactId>
+			<version>${eligibility.datanucleus-api-jpa.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.geronimo.specs</groupId>
+					<artifactId>geronimo-jpa_2.0_spec</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jdo</groupId>
+					<artifactId>jdo-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-jdo-query</artifactId>
+			<version>${eligibility.datanucleus-jdo-query.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.jdo</groupId>
+					<artifactId>jdo-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-jpa-query</artifactId>
+			<version>${eligibility.datanucleus-jpa-query.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.datanucleus</groupId>
+			<artifactId>datanucleus-rdbms</artifactId>
+			<version>${eligibility.datanucleus-rdbms.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.geronimo.specs</groupId>
+					<artifactId>geronimo-jta_1.1_spec</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+		</dependency>
+	</dependencies>
+</project>

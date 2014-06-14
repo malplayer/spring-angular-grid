@@ -1,0 +1,43 @@
+<configuration>
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.novation.eligibility.domain" level="TRACE" />
+	<logger name="org.springframework" level="INHERITED" />
+	<logger name="org.springframework.data" level="INFO" />
+
+	<logger name="DataNucleus" level="INFO" />
+
+	<logger name="DataNucleus.ValueGeneration" level="INHERITED" />
+	<logger name="DataNucleus.Connection" level="INHERITED" />
+	<logger name="DataNucleus.General" level="INHERITED" />
+	<logger name="DataNucleus.Transaction" level="DEBUG" />
+	<logger name="DataNucleus.MetaData" level="INHERITED" />
+	<logger name="DataNucleus.SchemaTool" level="INHERITED" />
+	<logger name="DataNucleus.JPA" level="INHERITED" />
+	<logger name="DataNucleus.Datastore.Native" level="DEBUG" />
+	<logger name="DataNucleus.Datastore" level="INHERITED" />
+	<logger name="DataNucleus.ClassLoading" level="INHERITED" />
+	<logger name="DataNucleus.Cache" level="INHERITED" />
+	<logger name="DataNucleus.Utility" level="INHERITED" />
+	<logger name="DataNucleus.Plugin" level="INHERITED" />
+	<logger name="DataNucleus.Enhancer" level="INHERITED" />
+	<logger name="DataNucleus.JDO" level="INHERITED" />
+
+	<logger name="org.hibernate" level="INHERITED"/>
+
+	<logger name="org.hibernate.SQL" level="DEBUG"/>
+	<logger name="org.hibernate.tool.hbm2ddl" level="DEBUG"/>
+	<logger name="org.hibernate.pretty" level="DEBUG"/>
+	<logger name="org.hibernate.transaction" level="DEBUG"/>
+	<logger name="org.hibernate.jdbc" level="DEBUG"/>
+	<logger name="org.hibernate.type" level="DEBUG"/>
+	
+	<root level="INFO">
+		<appender-ref ref="stdout" />
+	</root>
+</configuration>

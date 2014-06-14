@@ -1,0 +1,83 @@
+<div class="alert alert-error" ng-show="error">{{errorMessage}}</div>
+<BR>
+<form class="form-horizontal">
+
+	<div class="control-group">
+		<label class="control-label" for="rs_name">Member Name</label>
+
+		<div class="controls">
+			<input type="text" id="rs_name" ng-model="rs.name"
+				placeholder="Member Name" required min="2">
+		</div>
+	</div>
+
+	<div class="control-group">
+
+		<label class="control-label" for="facility_name">Facility Name</label>
+
+		<div class="controls">
+			<input type="text" id="facility_name" ng-model="rs.facility.name"
+				placeholder="Facility Name" required min="2">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="facility_identification">Identification</label>
+
+		<div class="controls">
+
+
+			<input class="span3" type="number" id="facility_identification"
+				ng-model="rs.facility.identification" placeholder="Identification" required min="1">
+			<span class="add-on">Should be numeric</span>
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<label class="checkbox"> <input type="checkbox"
+				ng-model="rs.facility.apexus"> Is Apexus
+			</label>
+		</div>
+		<hr />
+		<div class="controls">
+			<button type="button" class="btn btn-primary"
+				ng-disabled="!rs.name || !rs.facility.identification" ng-hide="editMode"
+				ng-click="addNewMember(rs)">Add Member</button>
+				
+			<button type="button" class="btn btn-primary"
+				ng-disabled="!rs.facility.name || !rs.facility.identification" ng-show="editMode"
+				ng-click="updateMember(rs)">Save Member</button>
+			<button type="button" class="btn" ng-click="resetMemberForm()">Reset</button>
+		</div>
+	</div>
+</form>
+<hr />
+<h3>Members List1</h3>
+<div class="alert alert-info" ng-show="members.length == 0">No Members found</div>
+<table class="table table-bordered table-striped" ng-show="members.length > 0">
+	<thead>
+		<tr>
+			<th style="text-align: center; width: 25px;">Id</th>
+ 			<th style="text-align: center;">Name</th>
+			<th style="text-align: center;">Identification</th>
+			<th style="text-align: center;">Apexus</th>
+ 			<th style="text-align: center;">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="item in members | orderBy:predicate">
+			<td style="text-align: center;">{{item.id}}</td>
+			<td>{{item.name}}</td>
+			<td>{{item.facility.identification}}</td>
+			<td style="text-align: center; width: 20px;"><span
+				ng-show="item.facility.apexus" class="icon-ok"></span></td>
+				
+			<td style="width: 100px; text-align: center;">
+				<button class="btn btn-mini btn-danger"
+					ng-click="removeMember(item.id)">Remove</button>
+				<button class="btn btn-mini btn-success" ng-click="editMember(item)">Edit</button>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<button class="btn btn-danger" ng-show="members.length > 1"
+	ng-click="removeAllMembers()">Remove All members</button>

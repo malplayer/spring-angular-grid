@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!-- rest api servlet; only designed to support json as interchange format -->
+
+	<context:component-scan
+		base-package="com.novation.eligibility.rest.controller"
+		use-default-filters="false">
+		<context:include-filter
+			expression="org.springframework.stereotype.Controller"
+			type="annotation" />
+	</context:component-scan>
+
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property
+					name="objectMapper"
+					ref="objectMapper" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<bean
+		id="objectMapper"
+		class="com.novation.eligibility.web.rest.json.jackson.ObjectMapper">
+	</bean>
+
+	<mvc:interceptors>
+		<bean
+			id="localeChangeInterceptor"
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property
+				name="paramName"
+				value="lang" />
+		</bean>
+	</mvc:interceptors>
+
+	<bean
+		id="localeResolver"
+		class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver" />
+
+	<bean
+		id="cnvr"
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property
+			name="order"
+			value="1" />
+		<property name="contentNegotiationManager">
+			<bean class="org.springframework.web.accept.ContentNegotiationManager">
+				<constructor-arg>
+					<bean
+						class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
+						<constructor-arg>
+							<map>
+								<entry
+									key="json"
+									value="application/json" />
+							</map>
+						</constructor-arg>
+					</bean>
+				</constructor-arg>
+			</bean>
+		</property>
+<!-- 		<property name="mediaTypes">
+			<map>
+				<entry
+					key="json"
+					value="application/json"/>
+			</map>
+		</property>
+ -->
+		<property
+			name="defaultContentType"
+			value="application/json" />
+		<property name="defaultViews">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+			</list>
+		</property>
+	</bean>
+
+    <!-- Allow Exceptions to be handled in annotated methods if desired.  Otherwise fallback to the
+         'restExceptionResolver' below: -->
+	<bean
+		id="annotationMethodHandlerExceptionResolver"
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">
+		<property
+			name="order"
+			value="0" />
+	</bean>
+
+	<bean
+		id="restExceptionResolver"
+		class="com.novation.eligibility.rest.spring.web.servlet.handler.RestExceptionHandler">
+		<property
+			name="order"
+			value="100" />
+
+		<property name="errorResolver">
+			<bean class="com.novation.eligibility.rest.spring.web.servlet.handler.DefaultRestErrorResolver">
+				<property
+					name="localeResolver"
+					ref="localeResolver" />
+				<property
+					name="defaultMoreInfoUrl"
+					value="mailto:support@vha.com" />
+				<property name="exceptionMappingDefinitions">
+					<map>
+                        <!-- 404 -->
+						<entry
+							key="com.novation.eligibility.rest.controller.exception.NotFoundException"
+							value="404, _exmsg" />
+						<entry
+							key="com.novation.eligibility.rest.controller.exception.UnknownResourceException"
+							value="404, _exmsg" />
+                        <!-- 409 -->
+						<entry
+							key="com.novation.eligibility.rest.controller.exception.ConflictException"
+							value="409, _exmsg" />
+						
+                        <!-- 500 (catch all): -->
+						<entry
+							key="Throwable"
+							value="500" />
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+</beans>

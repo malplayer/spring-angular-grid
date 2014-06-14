@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
+    ">
+
+	<beans profile="dev,default">
+		<bean
+			abstract="true"
+			id="abstractDataSource"
+			class="org.apache.commons.dbcp.BasicDataSource"
+			destroy-method="close">
+		</bean>
+
+		<bean
+			id="abstractEmf"
+			abstract="true"
+			class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property
+				name="persistenceUnitName"
+				value="${eligibility.persistence.unit.name}" />
+			<property
+				name="persistenceProviderClass"
+				value="${eligibility.persistence.impl.class.name}" />
+			<property name="packagesToScan">
+				<util:list>
+					<value>com.novation.eligibility.domain.model</value>
+				</util:list>
+			</property>
+			<property name="mappingResources">
+				<util:list>
+					<value>META-INF/orm.xml</value>
+				</util:list>
+			</property>
+			<property
+				name="dataSource"
+				ref="dataSource" />
+			<property
+				name="jpaPropertyMap"
+				ref="jpaVendorSpecificProperties" />
+		</bean>
+
+		<bean
+			id="abstractDataNucleusSchemalessEmf"
+			parent="abstractEmf"
+			abstract="true">
+			<property name="jpaProperties">
+				<value>
+					datanucleus.autoCreateSchema=true
+					datanucleus.validateTables=false
+					datanucleus.validateConstraints=false
+				</value>
+			</property>
+		</bean>
+
+		<bean
+			id="abstractDataNucleusSchemafulEmf"
+			parent="abstractEmf"
+			abstract="true">
+			<property name="jpaProperties">
+				<value>
+					datanucleus.autoCreateSchema=false
+					datanucleus.validateTables=false
+					datanucleus.validateConstraints=false
+				</value>
+			</property>
+		</bean>
+
+		<bean
+			id="abstractHibernateSchemalessEmf"
+			parent="abstractEmf"
+			abstract="true">
+			<property name="jpaProperties">
+				<value>
+				</value>
+			</property>
+		</bean>
+
+		<bean
+			id="abstractHibernateSchemafulEmf"
+			parent="abstractEmf"
+			abstract="true">
+			<property name="jpaProperties">
+				<value>
+				</value>
+			</property>
+		</bean>
+
+		<beans profile="derby,default">
+			<context:property-placeholder
+				location="classpath:eligibility-test-support-db.derby.properties"
+				ignore-unresolvable="true" />
+		</beans>
+
+		<beans profile="sqlserver">
+			<beans profile="jtds">
+				<context:property-placeholder
+					location="classpath:eligibility-test-support-db.sqlserver-jtds.properties"
+					ignore-unresolvable="true" />
+			</beans>
+			<beans profile="msjdbc">
+				<context:property-placeholder
+					location="classpath:eligibility-test-support-db.sqlserver-msjdbc.properties"
+					ignore-unresolvable="true" />
+			</beans>
+		</beans>
+		
+		<beans profile="oracle">
+			<context:property-placeholder
+				location="classpath:eligibility-test-support-db.oracle.properties"
+				ignore-unresolvable="true" />
+		</beans>
+
+		<beans profile="datanucleus,default">
+			<context:property-placeholder
+				location="classpath:eligibility-test-support-jpa-datanucleus.properties"
+				ignore-unresolvable="true" />
+
+			<util:properties
+				id="jpaVendorSpecificProperties"
+				location="classpath:eligibility-test-support-pure-datanucleus.properties" />
+		</beans>
+
+		<beans profile="hibernate">
+			<context:property-placeholder
+				location="classpath:eligibility-test-support-jpa-hibernate.properties"
+				ignore-unresolvable="true" />
+
+			<util:properties
+				id="jpaVendorSpecificProperties"
+				location="classpath:eligibility-test-support-pure-hibernate.properties" />
+		</beans>
+
+		<beans profile="!domain">
+			<beans profile="!seed">
+				<bean
+					id="nonDomainNonSeedDataSource"
+					parent="abstractDataSource">
+					<property
+						name="driverClassName"
+						value="${eligibility.seed.database.driver.name}" />
+					<property
+						name="url"
+						value="${eligibility.seed.database.url}" />
+					<property
+						name="username"
+						value="${eligibility.seed.database.username}" />
+					<property
+						name="password"
+						value="${eligibility.seed.database.password}" />
+				</bean>
+
+				<alias
+					name="nonDomainNonSeedDataSource"
+					alias="dataSource" />
+
+				<beans profile="datanucleus,default">
+					<bean
+						id="emf"
+						parent="abstractDataNucleusSchemafulEmf">
+					</bean>
+				</beans>
+
+				<beans profile="hibernate">
+					<bean
+						id="emf"
+						parent="abstractHibernateSchemafulEmf">
+					</bean>
+				</beans>
+			</beans>
+		</beans>
+
+		<beans profile="domain">
+			<!-- we're building the domain module, so use a raw/empty database -->
+			<bean
+				id="domainDataSource"
+				parent="abstractDataSource">
+				<property
+					name="driverClassName"
+					value="${eligibility.test.database.driver.name}" />
+				<property
+					name="url"
+					value="${eligibility.test.database.url}" />
+				<property
+					name="username"
+					value="${eligibility.test.database.username}" />
+				<property
+					name="password"
+					value="${eligibility.test.database.password}" />
+			</bean>
+
+			<alias
+				name="domainDataSource"
+				alias="dataSource" />
+
+			<beans profile="datanucleus">
+				<bean
+					id="emf"
+					parent="abstractDataNucleusSchemalessEmf">
+				</bean>
+			</beans>
+
+			<beans profile="hibernate">
+				<bean
+					id="emf"
+					parent="abstractHibernateSchemalessEmf">
+				</bean>
+			</beans>
+		</beans>
+
+		<beans profile="seed">
+			<!-- we're seeding the database from the domain module -->
+			<alias
+				name="seedDataSource"
+				alias="dataSource" />
+
+			<beans profile="derby">
+				<bean
+					id="seedDataSource"
+					parent="abstractDataSource">
+					<property
+						name="driverClassName"
+						value="${eligibility.seed.database.driver.name}" />
+					<property
+						name="url"
+						value="${eligibility.seed.database.url};create=true" />
+					<property
+						name="username"
+						value="${eligibility.seed.database.username}" />
+					<property
+						name="password"
+						value="${eligibility.seed.database.password}" />
+				</bean>
+			</beans>
+
+			<beans profile="sqlserver">
+				<bean
+					id="seedDataSource"
+					parent="abstractDataSource">
+					<property
+						name="driverClassName"
+						value="${eligibility.seed.database.driver.name}" />
+					<property
+						name="url"
+						value="${eligibility.seed.database.url}" />
+					<property
+						name="username"
+						value="${eligibility.seed.database.username}" />
+					<property
+						name="password"
+						value="${eligibility.seed.database.password}" />
+				</bean>
+			</beans>
+
+			<beans profile="oracle">
+				<bean
+					id="seedDataSource"
+					parent="abstractDataSource">
+					<property
+						name="driverClassName"
+						value="${eligibility.seed.database.driver.name}" />
+					<property
+						name="url"
+						value="${eligibility.seed.database.url}" />
+					<property
+						name="username"
+						value="${eligibility.seed.database.username}" />
+					<property
+						name="password"
+						value="${eligibility.seed.database.password}" />
+				</bean>
+			</beans>
+
+			<beans profile="datanucleus">
+				<bean
+					id="emf"
+					parent="abstractDataNucleusSchemalessEmf">
+				</bean>
+			</beans>
+
+			<beans profile="hibernate">
+				<bean
+					id="emf"
+					parent="abstractHibernateSchemalessEmf">
+				</bean>
+			</beans>
+		</beans>
+	</beans>
+</beans>

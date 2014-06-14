@@ -1,0 +1,17 @@
+while getopts ":s:X:" OPT # "-X" ignored here & passed through
+do
+	case "$OPT" in
+		s) DB_HOST=$OPTARG ;;
+		:) echo "Option -$OPTARG requires an argument." >&2 ; usage ; exit 1 ;;
+		\?) echo "invalid argument: -$OPTARG" >&2 ; usage ; exit 1 ;;
+	esac
+done
+
+if [ ! $DB_HOST ]; then
+	echo "Database server name must be specified via '-s servername' option"
+	exit 1
+fi
+
+GO_CMD="`dirname $0`/go -P hibernate,oracle,oracle -u jdbc:oracle:thin:@$DB_HOST:1521:orcl -d oracle.jdbc.OracleDriver -l scott -p oracle $@"
+echo $GO_CMD
+$GO_CMD

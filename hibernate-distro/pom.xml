@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+Convenient POM to include Hibernate JPA with consideration for transitive dependency exclusions.
+
+To use this, import with the usual groupId/artifactId/version coordinates plus
+
+<type>pom</type>
+<scope>import</scope>
+
+See http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html#Importing_Dependencies
+-->
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.novation</groupId>
+		<artifactId>eligibility-parent-pom</artifactId>
+		<version>0.1.0.BUILD-SNAPSHOT</version>
+		<relativePath>../parent-pom/pom.xml</relativePath>
+	</parent>
+	<artifactId>eligibility-hibernate-distro</artifactId>
+	<version>4.1.9.Final</version><!-- Corresponds to Hibernate release version -->
+	<packaging>pom</packaging>
+	<name>Eligibility: Hibernate Distribution</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${eligibility.hibernate-entitymanager.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.spec.javax.transaction</groupId>
+					<artifactId>jboss-transaction-api_1.1_spec</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+		</dependency>
+	</dependencies>
+</project>

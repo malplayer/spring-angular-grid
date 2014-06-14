@@ -1,0 +1,36 @@
+usage()
+{
+	echo "Usage: $0 [-P profile(s)] [-u <url>] [-d <driver>] [-l <username>] [-p <password>] [-h]" >&2
+}
+
+while getopts ":P:u:d:l:p:s:X:h" OPT # "-s" & "-X" ignored here & passed through
+do
+	case "$OPT" in
+		P) PROFILES=$OPTARG ;;
+		:) echo "Option -$OPTARG requires an argument." >&2 ; usage ; exit 1 ;;
+		\?) echo "invalid argument: -$OPTARG" >&2 ; usage ; exit 1 ;;
+	esac
+done
+
+if [ ! "$PROFILES" ]; then
+	if [ "$SPRING_PROFILES_ACTIVE" ]; then
+		echo "Warning: no profile(s) given; using current SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE"
+		PROFILES=$SPRING_PROFILES_ACTIVE
+	else
+		echo "Profile(s) are required if no environment variable SPRING_PROFILES_ACTIVE is present" >&2
+		usage
+		exit 1
+	fi
+fi
+
+CLEAN=clean
+
+mvn $CLEAN process-test-resources -P $PROFILES # minimum phase to produce file below
+
+GENERATED_SCRIPT="`dirname $0`/target/test-classes/run-webapp"
+echo "generated $GENERATED_SCRIPT"
+chmod u+x $GENERATED_SCRIPT
+
+SCRIPT_CMD="$GENERATED_SCRIPT $@"
+echo $SCRIPT_CMD
+$SCRIPT_CMD

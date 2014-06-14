@@ -1,0 +1,1250 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.novation</groupId>
+	<artifactId>eligibility-parent-pom</artifactId>
+	<packaging>pom</packaging>
+	<version>0.1.0.BUILD-SNAPSHOT</version>
+	<name>Eligibility Parent POM</name>
+
+	<properties>
+		<eligibility.mvn.persistence.unit.name>eligibility-pu</eligibility.mvn.persistence.unit.name>
+
+		<eligibility.artifact.support>eligibility-support</eligibility.artifact.support>
+		<eligibility.artifact.test.support>eligibility-test-support</eligibility.artifact.test.support>
+		<eligibility.artifact.domain>eligibility-domain</eligibility.artifact.domain>
+		<eligibility.artifact.dto>eligibility-dto</eligibility.artifact.dto>
+		<eligibility.artifact.service>eligibility-service</eligibility.artifact.service>
+		<eligibility.artifact.rest>eligibility-rest</eligibility.artifact.rest>
+		<eligibility.artifact.web>eligibility-web</eligibility.artifact.web>
+		<eligibility.artifact.liquibase.data>eligibility-liquibase-data</eligibility.artifact.liquibase.data>
+		<eligibility.artifact.domain.script.support>domain-script-support</eligibility.artifact.domain.script.support>
+
+		<!-- versions of dependencies -->
+
+		<!-- basics/transcendants -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<eligibility.java.version>1.7</eligibility.java.version>
+		<eligibility.java.inject.version>1</eligibility.java.inject.version>
+		<eligibility.spring.version>4.0.2.RELEASE</eligibility.spring.version>
+		<eligibility.spring-security.version>3.2.1.RELEASE</eligibility.spring-security.version>
+		<eligibility.spring.webflow.version>2.3.3.RELEASE</eligibility.spring.webflow.version>
+		<eligibility.guava.version>15.0</eligibility.guava.version>
+		<eligibility.commons-lang3.version>3.1</eligibility.commons-lang3.version>
+		<eligibility.commons-io.version>2.4</eligibility.commons-io.version>
+		<eligibility.org.osgi.core.version>5.0.0</eligibility.org.osgi.core.version>
+		<eligibility.org.osgi.compendium.version>4.3.0</eligibility.org.osgi.compendium.version>
+		<eligibility.gemini-blueprint-core.version>1.0.0.RELEASE</eligibility.gemini-blueprint-core.version>
+		<eligibility.jackson-annotations.version>2.1.1</eligibility.jackson-annotations.version>
+		<eligibility.jackson-databind.version>${eligibility.jackson-annotations.version}</eligibility.jackson-databind.version>
+		<eligibility.jaxb-api-osgi.version>2.2.6</eligibility.jaxb-api-osgi.version>
+		<eligibility.flexjson.version>2.1</eligibility.flexjson.version>
+		<eligibility.xstream.version>1.4.3</eligibility.xstream.version>
+		<eligibility.joda-time.version>2.3</eligibility.joda-time.version>
+		<eligibility.collections-generic.version>4.01</eligibility.collections-generic.version>
+		<eligibility.reflections.version>0.9.8</eligibility.reflections.version>
+		<eligibility.groovy.version>2.2.1</eligibility.groovy.version>
+		<eligibility.groovy-eclipse-compiler.version>2.7.0-01</eligibility.groovy-eclipse-compiler.version>
+		<eligibility.ivy.version>2.2.0</eligibility.ivy.version>
+		<eligibility.commons-codec.version>1.7</eligibility.commons-codec.version>
+
+		<!-- maven plugins -->
+		<eligibility.maven.assembly.plugin.version>2.3</eligibility.maven.assembly.plugin.version>
+		<eligibility.felix.maven.plugin.version>2.3.7</eligibility.felix.maven.plugin.version>
+		<eligibility.eclipse.m2e.plugin.version>1.0.0</eligibility.eclipse.m2e.plugin.version>
+		<eligibility.maven.compiler.plugin.version>3.1</eligibility.maven.compiler.plugin.version>
+		<eligibility.maven.resources.plugin.version>2.5</eligibility.maven.resources.plugin.version>
+		<eligibility.maven.surefire.plugin.version>2.16</eligibility.maven.surefire.plugin.version>
+		<eligibility.maven.failsafe.plugin.version>2.13</eligibility.maven.failsafe.plugin.version>
+		<eligibility.maven.tomcat.plugin.version>1.1</eligibility.maven.tomcat.plugin.version>
+		<eligibility.jetty-maven-plugin.version>8.1.9.v20130131</eligibility.jetty-maven-plugin.version>
+		<eligibility.maven.tomcat7.plugin.version>2.1</eligibility.maven.tomcat7.plugin.version>
+		<eligibility.maven.eclipse.plugin.version>2.9</eligibility.maven.eclipse.plugin.version>
+		<eligibility.maven.idea.plugin.version>2.2</eligibility.maven.idea.plugin.version>
+		<eligibility.maven.dependency.plugin.version>2.5.1</eligibility.maven.dependency.plugin.version>
+		<eligibility.maven.install.plugin.version>2.4</eligibility.maven.install.plugin.version>
+		<eligibility.maven.release.plugin.version>2.4</eligibility.maven.release.plugin.version>
+		<eligibility.maven-jar-plugin.version>2.3.2</eligibility.maven-jar-plugin.version>
+		<eligibility.sql-maven-plugin.version>1.5</eligibility.sql-maven-plugin.version>
+		<eligibility.maven-enforcer-plugin.version>1.2</eligibility.maven-enforcer-plugin.version>
+		<eligibility.exec-maven-plugin.version>1.2.1</eligibility.exec-maven-plugin.version>
+		<eligibility.properties-maven-plugin.version>1.0-alpha-2</eligibility.properties-maven-plugin.version>
+
+		<!-- logging -->
+		<eligibility.commons-logging.version>1.1.1</eligibility.commons-logging.version>
+		<eligibility.logback.version>1.0.6</eligibility.logback.version>
+		<eligibility.log4j-over-slf4j.version>1.6.6</eligibility.log4j-over-slf4j.version>
+		<eligibility.jcl-over-slf4j.version>1.6.6</eligibility.jcl-over-slf4j.version>
+		<eligibility.jul-to-slf4j.version>1.6.6</eligibility.jul-to-slf4j.version>
+		<eligibility.log4j.version>1.2.17</eligibility.log4j.version>
+		<eligibility.slf4j-api.version>1.7.2</eligibility.slf4j-api.version>
+
+		<!-- validation -->
+		<eligibility.validation-api.version>1.0.0.GA</eligibility.validation-api.version>
+
+		<eligibility.bval-jsr303.version>0.4</eligibility.bval-jsr303.version>
+		<eligibility.hibernate-validator.version>4.3.0.Final</eligibility.hibernate-validator.version>
+
+		<eligibility.validation-api.impl.groupId>org.apache.bval</eligibility.validation-api.impl.groupId>
+		<eligibility.validation-api.impl.artifactId>bval-jsr303</eligibility.validation-api.impl.artifactId>
+		<eligibility.validation-api.impl.version>${eligibility.bval-jsr303.version}</eligibility.validation-api.impl.version>
+
+		<!-- persistence/data -->
+		<eligibility.jta.version>1.1</eligibility.jta.version>
+		<eligibility.commons-pool.version>1.5.6</eligibility.commons-pool.version>
+		<eligibility.commons-dbcp.version>1.4</eligibility.commons-dbcp.version>
+
+		<eligibility.querydsl.version>3.2.4</eligibility.querydsl.version>
+
+		<eligibility.jdo-api.version>3.0.1</eligibility.jdo-api.version>
+
+		<eligibility.persistence-api.groupId>org.hibernate.javax.persistence</eligibility.persistence-api.groupId>
+		<eligibility.persistence-api.artifactId>hibernate-jpa-2.0-api</eligibility.persistence-api.artifactId>
+		<eligibility.persistence-api.version>1.0.1.Final</eligibility.persistence-api.version>
+
+		<eligibility.hibernate-distro.version>4.1.9.Final</eligibility.hibernate-distro.version>
+		<eligibility.hibernate-tools.version>${project.version}</eligibility.hibernate-tools.version>
+		<eligibility.hibernate-entitymanager.version>${eligibility.hibernate-distro.version}</eligibility.hibernate-entitymanager.version>
+
+		<eligibility.datanucleus-core.version>3.1.4</eligibility.datanucleus-core.version>
+		<eligibility.datanucleus-api-jdo.version>3.1.3</eligibility.datanucleus-api-jdo.version>
+		<eligibility.datanucleus-jdo-query.version>3.0.2</eligibility.datanucleus-jdo-query.version>
+		<eligibility.datanucleus-api-jpa.version>3.1.4</eligibility.datanucleus-api-jpa.version>
+		<eligibility.datanucleus-jpa-query.version>3.0.2</eligibility.datanucleus-jpa-query.version>
+		<eligibility.datanucleus-rdbms.version>3.1.3</eligibility.datanucleus-rdbms.version>
+		<eligibility.maven-datanucleus-plugin.version>3.1.3</eligibility.maven-datanucleus-plugin.version>
+
+		<eligibility.persistence-api.impl.datanucleus.class.name>org.datanucleus.api.jpa.PersistenceProviderImpl</eligibility.persistence-api.impl.datanucleus.class.name>
+		<eligibility.persistence-api.impl.hibernate.class.name>org.hibernate.ejb.HibernatePersistence</eligibility.persistence-api.impl.hibernate.class.name>
+
+		<eligibility.spring-data-jpa.version>1.3.0.RELEASE</eligibility.spring-data-jpa.version>
+
+		<eligibility.derby.version>10.9.1.0</eligibility.derby.version>
+		<eligibility.jtds.version>1.2.7</eligibility.jtds.version>
+		<eligibility.msjdbc.groupId>com.microsoft</eligibility.msjdbc.groupId>
+		<eligibility.msjdbc.artifactId>mssql-jdbc</eligibility.msjdbc.artifactId>
+		<eligibility.msjdbc.version>4.0</eligibility.msjdbc.version>
+
+		<eligibility.liquibase.version>3.1.0</eligibility.liquibase.version>
+
+		<!-- derby -->
+		<eligibility.rdb.derby.test.database.version>${eligibility.derby.version}</eligibility.rdb.derby.test.database.version>
+		<eligibility.rdb.derby.test.database.driver.name>org.apache.derby.jdbc.EmbeddedDriver</eligibility.rdb.derby.test.database.driver.name>
+		<eligibility.rdb.derby.test.database.name>${eligibility.artifact.domain}-test</eligibility.rdb.derby.test.database.name>
+		<eligibility.rdb.derby.test.database.target.relative.subdir>derby</eligibility.rdb.derby.test.database.target.relative.subdir>
+		<eligibility.rdb.derby.test.database.target.relative.path>${eligibility.rdb.derby.test.database.target.relative.subdir}/${eligibility.rdb.derby.seed.artifact.artifactId}-${project.version}</eligibility.rdb.derby.test.database.target.relative.path>
+		<eligibility.rdb.derby.test.database.url>jdbc:derby:target/${eligibility.rdb.derby.test.database.target.relative.subdir}/${eligibility.rdb.derby.test.database.name};create=true</eligibility.rdb.derby.test.database.url>
+		<eligibility.rdb.derby.test.database.username></eligibility.rdb.derby.test.database.username>
+		<eligibility.rdb.derby.test.database.password></eligibility.rdb.derby.test.database.password>
+		<eligibility.rdb.derby.test.database.port>20000</eligibility.rdb.derby.test.database.port>
+
+		<eligibility.rdb.derby.seed.assembly.suffix>seeded-derby-db</eligibility.rdb.derby.seed.assembly.suffix>
+		<eligibility.rdb.derby.seed.assembly.format>zip</eligibility.rdb.derby.seed.assembly.format>
+
+		<eligibility.rdb.derby.seed.artifact.classifier>${eligibility.rdb.derby.seed.assembly.suffix}</eligibility.rdb.derby.seed.artifact.classifier>
+		<eligibility.rdb.derby.seed.artifact.artifactId>${eligibility.artifact.domain}</eligibility.rdb.derby.seed.artifact.artifactId>
+		<eligibility.rdb.derby.seed.artifact.packaging>${eligibility.rdb.derby.seed.assembly.format}</eligibility.rdb.derby.seed.artifact.packaging>
+		<eligibility.rdb.derby.seed.artifact.target.relative.path>${eligibility.rdb.derby.test.database.target.relative.path}</eligibility.rdb.derby.seed.artifact.target.relative.path>
+
+		<eligibility.rdb.derby.seed.database.driver.name>${eligibility.rdb.derby.test.database.driver.name}</eligibility.rdb.derby.seed.database.driver.name>
+
+		<eligibility.rdb.derby.seed.database.target.relative.subdir>${eligibility.rdb.derby.test.database.target.relative.subdir}</eligibility.rdb.derby.seed.database.target.relative.subdir>
+		<eligibility.rdb.derby.seed.database.target.relative.path>${eligibility.rdb.derby.seed.database.target.relative.subdir}/${eligibility.rdb.derby.seed.artifact.artifactId}-${project.version}</eligibility.rdb.derby.seed.database.target.relative.path>
+		<eligibility.rdb.derby.seed.database.url>jdbc:derby:target/${eligibility.rdb.derby.seed.database.target.relative.path}</eligibility.rdb.derby.seed.database.url>
+		<eligibility.rdb.derby.seed.database.username>${eligibility.rdb.derby.test.database.username}</eligibility.rdb.derby.seed.database.username>
+		<eligibility.rdb.derby.seed.database.password>${eligibility.rdb.derby.test.database.password}</eligibility.rdb.derby.seed.database.password>
+
+		<!-- sqlserver -->
+		<eligibility.rdb.sqlserver.ping.sql.command>select 1</eligibility.rdb.sqlserver.ping.sql.command>
+
+		<eligibility.rdb.sqlserver.test.database.hostname>localhost</eligibility.rdb.sqlserver.test.database.hostname>
+		<eligibility.rdb.sqlserver.test.database.instance.name>SQLEXPRESS</eligibility.rdb.sqlserver.test.database.instance.name>
+		<eligibility.rdb.sqlserver.test.database.name>${eligibility.artifact.domain}-test</eligibility.rdb.sqlserver.test.database.name> <!-- if empty, will use default database for test user -->
+		<eligibility.rdb.sqlserver.test.database.port>1433</eligibility.rdb.sqlserver.test.database.port>
+		<eligibility.rdb.sqlserver.test.database.username>${eligibility.artifact.domain}-test</eligibility.rdb.sqlserver.test.database.username>
+		<eligibility.rdb.sqlserver.test.database.password>${eligibility.rdb.sqlserver.test.database.username}</eligibility.rdb.sqlserver.test.database.password>
+
+		<eligibility.rdb.sqlserver.seed.database.hostname>${eligibility.rdb.sqlserver.test.database.hostname}</eligibility.rdb.sqlserver.seed.database.hostname>
+		<eligibility.rdb.sqlserver.seed.database.instance.name>${eligibility.rdb.sqlserver.test.database.instance.name}</eligibility.rdb.sqlserver.seed.database.instance.name>
+		<eligibility.rdb.sqlserver.seed.database.name>${eligibility.artifact.domain}-seed</eligibility.rdb.sqlserver.seed.database.name> <!-- if empty, will use default database for seed user -->
+		<eligibility.rdb.sqlserver.seed.database.port>${eligibility.rdb.sqlserver.test.database.port}</eligibility.rdb.sqlserver.seed.database.port>
+		<eligibility.rdb.sqlserver.seed.database.username>${eligibility.artifact.domain}-seed</eligibility.rdb.sqlserver.seed.database.username>
+		<eligibility.rdb.sqlserver.seed.database.password>${eligibility.rdb.sqlserver.seed.database.username}</eligibility.rdb.sqlserver.seed.database.password>
+
+		<!-- sqlserver over jtds jdbc driver -->
+		<eligibility.rdb.sqlserver-jtds.database.version>${eligibility.jtds.version}</eligibility.rdb.sqlserver-jtds.database.version>
+		<eligibility.rdb.sqlserver-jtds.database.driver.name>net.sourceforge.jtds.jdbc.Driver</eligibility.rdb.sqlserver-jtds.database.driver.name>
+
+		<eligibility.rdb.sqlserver-jtds.url.prefix>jdbc:jtds:sqlserver://</eligibility.rdb.sqlserver-jtds.url.prefix>
+		<eligibility.rdb.sqlserver-jtds.test.database.url>${eligibility.rdb.sqlserver-jtds.url.prefix}${eligibility.rdb.sqlserver.test.database.hostname}:${eligibility.rdb.sqlserver.test.database.port}/${eligibility.rdb.sqlserver.test.database.name};instance=${eligibility.rdb.sqlserver.test.database.instance.name}</eligibility.rdb.sqlserver-jtds.test.database.url>
+		<eligibility.rdb.sqlserver-jtds.seed.database.url>${eligibility.rdb.sqlserver-jtds.url.prefix}${eligibility.rdb.sqlserver.seed.database.hostname}:${eligibility.rdb.sqlserver.seed.database.port}/${eligibility.rdb.sqlserver.seed.database.name};instance=${eligibility.rdb.sqlserver.seed.database.instance.name}</eligibility.rdb.sqlserver-jtds.seed.database.url>
+
+		<!-- sqlserver over microsoft jdbc driver -->
+		<eligibility.rdb.sqlserver-msjdbc.database.version>${eligibility.msjdbc.version}</eligibility.rdb.sqlserver-msjdbc.database.version>
+		<eligibility.rdb.sqlserver-msjdbc.database.driver.name>com.microsoft.sqlserver.jdbc.SQLServerDriver</eligibility.rdb.sqlserver-msjdbc.database.driver.name>
+
+		<eligibility.rdb.sqlserver-msjdbc.url.prefix>jdbc:sqlserver://</eligibility.rdb.sqlserver-msjdbc.url.prefix>
+		<eligibility.rdb.sqlserver-msjdbc.test.database.url>${eligibility.rdb.sqlserver-msjdbc.url.prefix}${eligibility.rdb.sqlserver.test.database.hostname}\\${eligibility.rdb.sqlserver.test.database.instance.name}:${eligibility.rdb.sqlserver.test.database.port};database=${eligibility.rdb.sqlserver.test.database.name}</eligibility.rdb.sqlserver-msjdbc.test.database.url>
+		<eligibility.rdb.sqlserver-msjdbc.seed.database.url>${eligibility.rdb.sqlserver-msjdbc.url.prefix}${eligibility.rdb.sqlserver.seed.database.hostname}\\${eligibility.rdb.sqlserver.seed.database.instance.name}:${eligibility.rdb.sqlserver.seed.database.port};database=${eligibility.rdb.sqlserver.seed.database.name}</eligibility.rdb.sqlserver-msjdbc.seed.database.url>
+
+		<!-- oracle -->
+		<eligibility.oracle.groupId>com.oracle</eligibility.oracle.groupId>
+		<eligibility.oracle.artifactId>ojdbc6</eligibility.oracle.artifactId>
+		<eligibility.oracle.version>11.2.0.2</eligibility.oracle.version>
+		<eligibility.rdb.oracle.database.driver.name>oracle.jdbc.OracleDriver</eligibility.rdb.oracle.database.driver.name>
+
+		<eligibility.rdb.oracle.test.database.driver.name>${eligibility.rdb.oracle.database.driver.name}</eligibility.rdb.oracle.test.database.driver.name>
+		<eligibility.rdb.oracle.url.prefix>jdbc:oracle:thin:@</eligibility.rdb.oracle.url.prefix>
+		<eligibility.rdb.oracle.ping.sql.command>select 1 from dual</eligibility.rdb.oracle.ping.sql.command>
+
+		<eligibility.rdb.oracle.test.database.version>${eligibility.oracle.version}</eligibility.rdb.oracle.test.database.version>
+		<eligibility.rdb.oracle.test.database.hostname>localhost</eligibility.rdb.oracle.test.database.hostname>
+		<eligibility.rdb.oracle.test.database.port>1521</eligibility.rdb.oracle.test.database.port>
+		<eligibility.rdb.oracle.test.database.sid>orcl</eligibility.rdb.oracle.test.database.sid>
+		<eligibility.rdb.oracle.test.database.url>${eligibility.rdb.oracle.url.prefix}${eligibility.rdb.oracle.test.database.hostname}:${eligibility.rdb.oracle.test.database.port}:${eligibility.rdb.oracle.test.database.sid}</eligibility.rdb.oracle.test.database.url>
+		<eligibility.rdb.oracle.test.database.username>scott</eligibility.rdb.oracle.test.database.username>
+		<eligibility.rdb.oracle.test.database.password>oracle</eligibility.rdb.oracle.test.database.password>
+
+		<eligibility.rdb.oracle.seed.database.driver.name>${eligibility.rdb.oracle.test.database.driver.name}</eligibility.rdb.oracle.seed.database.driver.name>
+		<eligibility.rdb.oracle.seed.database.hostname>${eligibility.rdb.oracle.test.database.hostname}</eligibility.rdb.oracle.seed.database.hostname>
+		<eligibility.rdb.oracle.seed.database.port>${eligibility.rdb.oracle.test.database.port}</eligibility.rdb.oracle.seed.database.port>
+		<eligibility.rdb.oracle.seed.database.sid>${eligibility.rdb.oracle.test.database.sid}</eligibility.rdb.oracle.seed.database.sid>
+		<eligibility.rdb.oracle.seed.database.url>${eligibility.rdb.oracle.url.prefix}${eligibility.rdb.oracle.seed.database.hostname}:${eligibility.rdb.oracle.seed.database.port}:${eligibility.rdb.oracle.seed.database.sid}</eligibility.rdb.oracle.seed.database.url>
+		<eligibility.rdb.oracle.seed.database.username>${eligibility.rdb.oracle.test.database.username}</eligibility.rdb.oracle.seed.database.username>
+		<eligibility.rdb.oracle.seed.database.password>${eligibility.rdb.oracle.test.database.password}</eligibility.rdb.oracle.seed.database.password>
+
+		<!-- web -->
+		<eligibility.servlet-api.version>2.5</eligibility.servlet-api.version>
+		<eligibility.jsp-api.version>2.2</eligibility.jsp-api.version>
+		<eligibility.jstl-api.version>1.2</eligibility.jstl-api.version>
+		<eligibility.jstl-impl.version>1.2</eligibility.jstl-impl.version>
+		<eligibility.httpcore-osgi.version>4.2.1</eligibility.httpcore-osgi.version>
+		<eligibility.httpclient-osgi.version>4.2.1</eligibility.httpclient-osgi.version>
+		<eligibility.commons-fileupload.version>1.2.2</eligibility.commons-fileupload.version>
+		<eligibility.wadl-core.version>1.1.2</eligibility.wadl-core.version>
+		<eligibility.tiles-jsp.version>2.2.2</eligibility.tiles-jsp.version>
+
+		<!-- testing -->
+		<eligibility.junit.version>4.10</eligibility.junit.version>
+		<eligibility.testng.version>6.7</eligibility.testng.version>
+		<eligibility.hamcrest-all.version>1.3</eligibility.hamcrest-all.version>
+		<eligibility.mockito-core.version>1.9.0</eligibility.mockito-core.version>
+
+		<!-- domain script support -->
+		<eligibility.domain.script.support.assembly.suffix>bin</eligibility.domain.script.support.assembly.suffix>
+		<eligibility.domain.script.support.assembly.format>zip</eligibility.domain.script.support.assembly.format>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>derby</id>
+			<properties>
+				<eligibility.db.vendor.id>derby</eligibility.db.vendor.id>
+				<eligibility.db.driver.id>derby</eligibility.db.driver.id>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>properties-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>set-system-properties</goal>
+								</goals>
+								<phase>initialize</phase>
+								<configuration>
+									<properties>
+										<property>
+											<name>derby.stream.error.field</name>
+											<value>java.lang.System.out</value>
+										</property>
+									</properties>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>sqlserver</id>
+			<properties>
+				<eligibility.db.vendor.id>sqlserver</eligibility.db.vendor.id>
+			</properties>
+		</profile>
+		<profile>
+			<id>oracle</id>
+			<properties>
+				<eligibility.db.vendor.id>oracle</eligibility.db.vendor.id>
+				<eligibility.db.driver.id>oracle</eligibility.db.driver.id>
+			</properties>
+		</profile>
+		<profile>
+			<id>jtds</id>
+			<properties>
+				<eligibility.db.driver.id>jtds</eligibility.db.driver.id>
+			</properties>
+		</profile>
+		<profile>
+			<id>msjdbc</id>
+			<properties>
+				<eligibility.db.driver.id>msjdbc</eligibility.db.driver.id>
+			</properties>
+		</profile>
+		<profile>
+			<id>hibernate</id>
+			<properties>
+				<eligibility.persistence-api.impl.id>hibernate</eligibility.persistence-api.impl.id>
+			</properties>
+		</profile>
+		<profile>
+			<id>datanucleus</id>
+			<properties>
+				<eligibility.persistence-api.impl.id>datanucleus</eligibility.persistence-api.impl.id>
+			</properties>
+		</profile>
+	</profiles>
+	<repositories>
+		<repository>
+			<id>VHA-Approved-Repos</id>
+			<url>http://tfsbuild2.corp.vha.com:7081/nexus/content/groups/VHA-Approved-Repos/</url>
+			<releases>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>spring-release</id>
+			<url>https://repo.spring.io/release</url>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<url>http://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>sonatype-snapshot</id>
+			<name>Sonatype Snapshot Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>scispike-cloudbees-foundation-snapshot</id>
+			<name>SciSpike Foundation Snapshots</name>
+			<url>https://repository-scispike.forge.cloudbees.com/snapshot/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>scispike-cloudbees-foundation-release</id>
+			<name>SciSpike Foundation Snapshots</name>
+			<url>https://repository-scispike.forge.cloudbees.com/release/</url>
+		</repository>
+		<!-- <repository> <id>datanucleus-snapshot</id> <name>DataNucleus Snapshot 
+			Repo</name> <url>http://www.datanucleus.org/downloads/maven2</url> <snapshots> 
+			<enabled>true</enabled> </snapshots> </repository> <repository> <id>springsource-libs-snapshot</id> 
+			<name>SpringSource Snapshots</name> <url>http://repo.springsource.org/libs-snapshot</url> 
+			</repository> <repository> <id>java.net-release</id> <name>Maven Java Net 
+			Releases</name> <url>https://maven.java.net/content/repositories/releases/</url> 
+			</repository> <repository> <id>java.net-snapshot</id> <name>Maven Java Net 
+			Snapshots and Releases</name> <url>https://maven.java.net/content/groups/public/</url> 
+			<snapshots> <enabled>true</enabled> </snapshots> </repository> <repository> 
+			<id>querydsl-release</id> <name>QueryDSL Maven Release Repo</name> <url>http://source.mysema.com/maven2/releases</url> 
+			</repository> <repository> <id>zodiac-release-repository</id> <name>Zodiac 
+			Release Repository</name> <url>http://zodiac.springsource.com/maven/bundles/release</url> 
+			</repository> <repository> <id>zodiac-milestone-repository</id> <name>Zodiac 
+			Milestone Repository</name> <url>http://zodiac.springsource.com/maven/bundles/milestone</url> 
+			</repository> -->
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>springsource-release</id>
+			<name>SpringSource Releases</name>
+			<url>http://repo.springsource.org/release</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>springsource-libs-snapshot</id>
+			<name>SpringSource Snapshots</name>
+			<url>http://repo.springsource.org/libs-snapshot</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>sonatype-snapshot</id>
+			<name>Sonatype Snapshot Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<dependencyManagement>
+
+		<dependencies>
+			<!-- children of this parent -->
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${eligibility.artifact.support}</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${eligibility.artifact.test.support}</artifactId>
+				<version>${project.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${eligibility.artifact.domain}</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${eligibility.artifact.dto}</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${eligibility.artifact.service}</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${eligibility.artifact.rest}</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${eligibility.artifact.web}</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${eligibility.artifact.liquibase.data}</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>${eligibility.artifact.domain.script.support}</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- basics -->
+			<dependency>
+				<groupId>${eligibility.validation-api.impl.groupId}</groupId>
+				<artifactId>${eligibility.validation-api.impl.artifactId}</artifactId>
+				<version>${eligibility.validation-api.impl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.novation</groupId>
+				<artifactId>eligibility-datanucleus-rdbms-distro</artifactId>
+				<version>${eligibility.datanucleus-core.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>com.novation</groupId>
+				<artifactId>eligibility-hibernate-distro</artifactId>
+				<version>${eligibility.hibernate-distro.version}</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>com.novation</groupId>
+				<artifactId>eligibility-hibernate-tools</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${eligibility.commons-lang3.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${eligibility.guava.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.derby</groupId>
+				<artifactId>derby</artifactId>
+				<version>${eligibility.derby.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.derby</groupId>
+				<artifactId>derbyclient</artifactId>
+				<version>${eligibility.derby.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.jtds</groupId>
+				<artifactId>jtds</artifactId>
+				<version>${eligibility.jtds.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${eligibility.msjdbc.groupId}</groupId>
+				<artifactId>${eligibility.msjdbc.artifactId}</artifactId>
+				<version>${eligibility.msjdbc.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${eligibility.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${eligibility.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${eligibility.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+				<version>${eligibility.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${eligibility.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${eligibility.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${eligibility.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${eligibility.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-oxm</artifactId>
+				<version>${eligibility.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${eligibility.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${eligibility.spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${eligibility.spring-security.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.jvnet.ws.wadl</groupId>
+				<artifactId>wadl-core</artifactId>
+				<version>${eligibility.wadl-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.osgi</groupId>
+				<artifactId>org.osgi.core</artifactId>
+				<version>${eligibility.org.osgi.core.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.osgi</groupId>
+				<artifactId>org.osgi.compendium</artifactId>
+				<version>${eligibility.org.osgi.compendium.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.inject</groupId>
+				<artifactId>javax.inject</artifactId>
+				<version>${eligibility.java.inject.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${eligibility.jackson-annotations.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${eligibility.jackson-databind.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.xml.bind</groupId>
+				<artifactId>jaxb-api</artifactId>
+				<version>${eligibility.jaxb-api-osgi.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${eligibility.commons-io.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${eligibility.joda-time.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.collections</groupId>
+				<artifactId>collections-generic</artifactId>
+				<version>${eligibility.collections-generic.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.reflections</groupId>
+				<artifactId>reflections</artifactId>
+				<version>${eligibility.reflections.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-all</artifactId>
+				<version>${eligibility.groovy.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.ivy</groupId>
+				<artifactId>ivy</artifactId>
+				<version>${eligibility.ivy.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${eligibility.commons-codec.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>${eligibility.oracle.groupId}</groupId>
+				<artifactId>${eligibility.oracle.artifactId}</artifactId>
+				<version>${eligibility.oracle.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-core</artifactId>
+				<version>${eligibility.liquibase.version}</version>
+			</dependency>
+
+
+			<!-- testing -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${eligibility.spring.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.testng</groupId>
+				<artifactId>testng</artifactId>
+				<version>${eligibility.testng.version}</version>
+				<scope>test</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>junit</groupId>
+						<artifactId>junit</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<!-- We prefer TestNG...use sparingly if at all -->
+				<groupId>junit</groupId>
+				<artifactId>junit-dep</artifactId>
+				<version>${eligibility.junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest-all</artifactId>
+				<version>${eligibility.hamcrest-all.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${eligibility.mockito-core.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- logging: (log4j, jcl, jul) -> slf4j/logback -->
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>${eligibility.commons-logging.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${eligibility.log4j.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>log4j-over-slf4j</artifactId>
+				<version>${eligibility.log4j-over-slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${eligibility.jcl-over-slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jul-to-slf4j</artifactId>
+				<version>${eligibility.jul-to-slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>${eligibility.logback.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${eligibility.slf4j-api.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${eligibility.servlet-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+				<version>${eligibility.jsp-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp.jstl</groupId>
+				<artifactId>jstl-api</artifactId>
+				<version>${eligibility.jstl-api.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.glassfish.web</groupId>
+				<artifactId>jstl-impl</artifactId>
+				<version>${eligibility.jstl-impl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>${eligibility.commons-fileupload.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.sf.flexjson</groupId>
+				<artifactId>flexjson</artifactId>
+				<version>${eligibility.flexjson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>${eligibility.xstream.version}</version>
+			</dependency>
+
+			<!-- persistence -->
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-apt</artifactId>
+				<version>${eligibility.querydsl.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-jpa</artifactId>
+				<version>${eligibility.spring-data-jpa.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>junit</groupId>
+						<artifactId>junit-dep</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>com.mysema.querydsl</groupId>
+				<artifactId>querydsl-jpa</artifactId>
+				<version>${eligibility.querydsl.version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>${eligibility.validation-api.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.transaction</groupId>
+				<artifactId>jta</artifactId>
+				<version>${eligibility.jta.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-pool</groupId>
+				<artifactId>commons-pool</artifactId>
+				<version>${eligibility.commons-pool.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>${eligibility.commons-dbcp.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>xml-apis</groupId>
+						<artifactId>xml-apis</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpcore-osgi</artifactId>
+				<version>${eligibility.httpcore-osgi.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>commons-logging</artifactId>
+						<groupId>commons-logging</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient-osgi</artifactId>
+				<version>${eligibility.httpclient-osgi.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>commons-logging</artifactId>
+						<groupId>commons-logging</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.dbunit</groupId>
+				<artifactId>dbunit</artifactId>
+				<version>2.4.9</version>
+			</dependency>
+		</dependencies>
+
+	</dependencyManagement>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</testResource>
+		</testResources>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.mysema.querydsl</groupId>
+					<artifactId>querydsl-maven-plugin</artifactId>
+					<version>${eligibility.querydsl.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>properties-maven-plugin</artifactId>
+					<version>${eligibility.properties-maven-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${eligibility.maven.compiler.plugin.version}</version>
+					<configuration>
+						<source>${eligibility.java.version}</source>
+						<target>${eligibility.java.version}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<debug>true</debug>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${eligibility.maven.resources.plugin.version}</version>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>${eligibility.exec-maven-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${eligibility.maven.surefire.plugin.version}</version>
+					<executions>
+						<execution>
+							<id>eligibility-unit-tests</id>
+							<phase>test</phase>
+						</execution>
+					</executions>
+					<configuration>
+						<parallel>classes</parallel>
+						<threadCount>10</threadCount>
+						<includes>
+							<include>**/test/unit/**/*.java</include>
+						</includes>
+						<excludes>
+							<exclude>**/test/integration/**/*.java</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>sql-maven-plugin</artifactId>
+					<version>${eligibility.sql-maven-plugin.version}</version>
+					<dependencies>
+						<dependency>
+							<groupId>net.sourceforge.jtds</groupId>
+							<artifactId>jtds</artifactId>
+							<version>${eligibility.jtds.version}</version>
+						</dependency>
+						<dependency>
+							<groupId>${eligibility.msjdbc.groupId}</groupId>
+							<artifactId>${eligibility.msjdbc.artifactId}</artifactId>
+							<version>${eligibility.msjdbc.version}</version>
+						</dependency>
+						<dependency>
+							<groupId>${eligibility.oracle.groupId}</groupId>
+							<artifactId>${eligibility.oracle.artifactId}</artifactId>
+							<version>${eligibility.oracle.version}</version>
+						</dependency>
+					</dependencies>
+					<executions>
+						<execution>
+							<id>sqlserver-jtds-ping-test-db</id>
+							<phase>initialize</phase>
+							<configuration>
+								<driver>${eligibility.rdb.sqlserver-jtds.database.driver.name}</driver>
+								<username>${eligibility.rdb.sqlserver.test.database.username}</username>
+								<password>${eligibility.rdb.sqlserver.test.database.password}</password>
+								<url>${eligibility.rdb.sqlserver-jtds.test.database.url}</url>
+								<sqlCommand>${eligibility.rdb.sqlserver.ping.sql.command}</sqlCommand>
+							</configuration>
+						</execution>
+						<execution>
+							<id>sqlserver-jtds-ping-seed-db</id>
+							<phase>initialize</phase>
+							<configuration>
+								<driver>${eligibility.rdb.sqlserver-jtds.database.driver.name}</driver>
+								<username>${eligibility.rdb.sqlserver.seed.database.username}</username>
+								<password>${eligibility.rdb.sqlserver.seed.database.password}</password>
+								<url>${eligibility.rdb.sqlserver-jtds.seed.database.url}</url>
+								<sqlCommand>${eligibility.rdb.sqlserver.ping.sql.command}</sqlCommand>
+							</configuration>
+						</execution>
+						<execution>
+							<id>sqlserver-msjdbc-ping-test-db</id>
+							<phase>initialize</phase>
+							<configuration>
+								<driver>${eligibility.rdb.sqlserver-msjdbc.database.driver.name}</driver>
+								<username>${eligibility.rdb.sqlserver.test.database.username}</username>
+								<password>${eligibility.rdb.sqlserver.test.database.password}</password>
+								<url>${eligibility.rdb.sqlserver-msjdbc.test.database.url}</url>
+								<sqlCommand>${eligibility.rdb.sqlserver.ping.sql.command}</sqlCommand>
+							</configuration>
+						</execution>
+						<execution>
+							<id>sqlserver-msjdbc-ping-seed-db</id>
+							<phase>initialize</phase>
+							<configuration>
+								<driver>${eligibility.rdb.sqlserver-msjdbc.database.driver.name}</driver>
+								<username>${eligibility.rdb.sqlserver.seed.database.username}</username>
+								<password>${eligibility.rdb.sqlserver.seed.database.password}</password>
+								<url>${eligibility.rdb.sqlserver-msjdbc.seed.database.url}</url>
+								<sqlCommand>${eligibility.rdb.sqlserver.ping.sql.command}</sqlCommand>
+							</configuration>
+						</execution>
+						<execution>
+							<id>oracle-ping-test-db</id>
+							<phase>initialize</phase>
+							<configuration>
+								<driver>${eligibility.rdb.oracle.database.driver.name}</driver>
+								<username>${eligibility.rdb.oracle.test.database.username}</username>
+								<password>${eligibility.rdb.oracle.test.database.password}</password>
+								<url>${eligibility.rdb.oracle.test.database.url}</url>
+								<sqlCommand>${eligibility.rdb.oracle.ping.sql.command}</sqlCommand>
+							</configuration>
+						</execution>
+						<execution>
+							<id>oracle-ping-seed-db</id>
+							<phase>initialize</phase>
+							<configuration>
+								<driver>${eligibility.rdb.oracle.database.driver.name}</driver>
+								<username>${eligibility.rdb.oracle.seed.database.username}</username>
+								<password>${eligibility.rdb.oracle.seed.database.password}</password>
+								<url>${eligibility.rdb.oracle.seed.database.url}</url>
+								<sqlCommand>${eligibility.rdb.oracle.ping.sql.command}</sqlCommand>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>${eligibility.maven.failsafe.plugin.version}</version>
+					<executions>
+						<execution>
+							<id>integration-test</id>
+							<goals>
+								<goal>integration-test</goal>
+							</goals>
+							<configuration>
+								<includes>
+									<include>**/IT*.java</include>
+									<include>**/*IT.java</include>
+									<include>**/*ITCase.java</include>
+									<include>**/test/integration/**/*.java</include>
+								</includes>
+								<excludes>
+									<exclude>**/test/unit/**/*.java</exclude>
+								</excludes>
+								<systemPropertyVariables>
+									<spring.profiles.active>dev,${eligibility.db.vendor.id},${eligibility.db.driver.id},${eligibility.persistence-api.impl.id}</spring.profiles.active>
+									<derby.stream.error.field>java.lang.System.out</derby.stream.error.field>
+								</systemPropertyVariables>
+							</configuration>
+						</execution>
+						<execution>
+							<id>verify</id>
+							<goals>
+								<goal>verify</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>tomcat-maven-plugin</artifactId>
+					<version>${eligibility.maven.tomcat.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>${eligibility.jetty-maven-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>${eligibility.maven.tomcat7.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<version>${eligibility.maven.eclipse.plugin.version}</version>
+					<configuration>
+						<downloadSources>true</downloadSources>
+						<downloadJavadocs>false</downloadJavadocs>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-idea-plugin</artifactId>
+					<version>${eligibility.maven.idea.plugin.version}</version>
+					<configuration>
+						<downloadSources>true</downloadSources>
+						<dependenciesAsLibraries>true</dependenciesAsLibraries>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>${eligibility.maven.dependency.plugin.version}</version>
+					<executions>
+						<execution>
+							<id>unpack-seeded-derby-db</id>
+							<phase>pre-integration-test</phase>
+							<goals>
+								<goal>unpack</goal>
+							</goals>
+							<configuration>
+								<artifactItems>
+									<artifactItem>
+										<groupId>${project.groupId}</groupId>
+										<artifactId>${eligibility.rdb.derby.seed.artifact.artifactId}</artifactId>
+										<classifier>${eligibility.rdb.derby.seed.artifact.classifier}</classifier>
+										<version>${project.version}</version>
+										<type>${eligibility.rdb.derby.seed.artifact.packaging}</type>
+										<overWrite>true</overWrite>
+										<outputDirectory>${project.build.directory}/${eligibility.rdb.derby.test.database.target.relative.subdir}</outputDirectory>
+									</artifactItem>
+								</artifactItems>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- The next two plugins are required until such time as https://issues.apache.org/jira/browse/FELIX-3352 
+					is fixed. -->
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>${eligibility.felix.maven.plugin.version}</version>
+					<executions>
+						<execution>
+							<id>bundle-manifest</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>manifest</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>bundle-manifest-NOT</id>
+							<phase>process-classes</phase>
+							<goals />
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${eligibility.maven-jar-plugin.version}</version>
+					<configuration>
+						<archive>
+							<manifestFile>
+								${project.build.outputDirectory}/META-INF/MANIFEST.MF
+							</manifestFile>
+						</archive>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>${eligibility.maven-enforcer-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>enforce-versions</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireMavenVersion>
+									<version>[3.0.4,)</version>
+								</requireMavenVersion>
+								<requireJavaVersion>
+									<version>[1.6,1.8)</version>
+								</requireJavaVersion>
+							</rules>
+						</configuration>
+					</execution>
+					<!-- TODO: remove this execution in favor of the ones following it when 
+						the requireActiveProfile/all is honored -->
+					<execution>
+						<id>require-profile-types</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireProperty>
+									<property>eligibility.persistence-api.impl.id</property>
+									<message>Please activate profile "hibernate" or "datanucleus".</message>
+								</requireProperty>
+								<requireProperty>
+									<property>eligibility.db.vendor.id</property>
+									<message>Please activate profile "derby", "sqlserver", or
+										"oracle".</message>
+								</requireProperty>
+								<requireProperty>
+									<property>eligibility.db.driver.id</property>
+									<message>Please activate profile "derby", "oracle", "jtds" or
+										"msjdbc".</message>
+								</requireProperty>
+							</rules>
+						</configuration>
+					</execution>
+					<!-- TODO when the requireActiveProfile/all element is honored <execution> 
+						<id>require-orm-profiles</id> <goals> <goal>enforce</goal> </goals> <configuration> 
+						<rules> <requireActiveProfile> <profiles>hibernate,datanucleus</profiles> 
+						<all>false</all> </requireActiveProfile> </rules> </configuration> </execution> 
+						<execution> <id>require-db-vendor-profiles</id> <goals> <goal>enforce</goal> 
+						</goals> <configuration> <rules> <requireActiveProfile> <profiles>derby,sqlserver</profiles> 
+						<all>false</all> </requireActiveProfile> </rules> </configuration> </execution> 
+						<execution> <id>require-jdbc-driver-profiles</id> <goals> <goal>enforce</goal> 
+						</goals> <configuration> <rules> <requireActiveProfile> <profiles>derby,jtds,msjdbc</profiles> 
+						<all>false</all> </requireActiveProfile> </rules> </configuration> </execution> -->
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>${eligibility.maven.install.plugin.version}</version>
+				<configuration>
+					<createChecksum>true</createChecksum>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${eligibility.maven.release.plugin.version}</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<localCheckout>true</localCheckout>
+					<pushChanges>false</pushChanges>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-idea-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

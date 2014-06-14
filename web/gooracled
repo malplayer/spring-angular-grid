@@ -1,0 +1,3 @@
+GO_CMD="`dirname $0`/gooracle -X 1710 $@"
+echo $GO_CMD
+$GO_CMD

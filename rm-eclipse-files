@@ -1,0 +1,5 @@
+#/bin/sh
+find . -name '.classpath' | xargs rm
+find . -name '.project' | xargs rm
+find . -name '.settings' | xargs rm -rf
+
